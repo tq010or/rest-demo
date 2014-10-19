@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        ul 
+        {
+            list-style-type: none;
+            -webkit-column-count: 5;
+            -moz-column-count: 5;
+            column-count: 5;
+            }
+            ul li span {
+                width: 40px;
+                display: inline-block;
+            }
+    </style>
+
+    <script type=text/javascript>
+
+    $(function() {
+
+      //NOTE: JSON-P?
+      //$('button#rest').bind('click', function() {
+      //    $.ajax({
+      //        url: "http://127.0.0.1:9080/rest",
+      //        jsonp: "callback",
+      //        data: {req_json_data: 'mock-up'},
+      //        success: function(resp){
+      //        console.log(resp);
+      //          $('ul#res').empty();
+      //          $('ul#res').append('<li>' + data.resp_json_data+ '</li>');
+      //        }
+      //        });
+      //});
+      //});
+
+
+      //NOTE: this is a POST method
+      $('button#rest_post').bind('click', function() {
+        console.log("post");
+        $.post(
+            '/post',
+            {data: $('input#rest_post').val()},
+            function(data, textStatus){
+                $('ul').empty();
+                $('ul#res').append('<li>' + data.resp_json_data+ '</li>');
+            }, "json");
+      });
+
+      //NOTE: this is a GET method
+      $('button#rest_get').bind('click', function() {
+        $.getJSON(
+            '/get', 
+            {data: $('input#rest_get').val()},
+            function(data, textStatus) {
+                $('ul').empty();
+                $('ul#res').append('<li>' + data.resp_json_data+ '</li>');
+            });
+        });
+        return false;
+    });
+  </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h4 class="text-muted">REST API demo (Python, Flask, Jquery and javascrip rock!)</h4>
+        </div>
+        <div>
+            <input type="text" size="20" id="rest_get" value="I am GET"><button href="javascript:void();" id="rest_get">GET</button> 
+            </br>
+            <input type="text" size="20" id="rest_post" value="I am POST"><button href="javascript:void();" id="rest_post">POST</button> 
+            </br>
+            <input type="text" size="20" id="rest_jsonp" value="I am JSONP"><button href="javascript:void();" id="rest_jsonp">JSONP</button> 
+            </br>
+            <ul id="res"></ul>
+        </div>
+    </div>
+</body>
+</html>
+
